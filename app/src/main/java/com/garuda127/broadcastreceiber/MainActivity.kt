@@ -40,12 +40,12 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<Button>(R.id.btnSendSMS).setOnClickListener {
             //insertar para mandar mensaje
-
+            sendSMS()
         }
 
         findViewById<Button>(R.id.btnSave).setOnClickListener {
             //insertar para guardar datos
-
+            guardardatos()
         }
         //broadcast receiver (sms)
 
@@ -68,11 +68,24 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
     }
 
+    fun sendSMS(){
+        var mensaje = findViewById<EditText>(R.id.txtMensaje).text.toString()
+        var numero = findViewById<EditText>(R.id.txtNumero).text.toString()
+        var obj = SmsManager.getDefault()
+        obj.sendTextMessage(numero,null, mensaje,null,null)
 
 
+    }
 
-
-
+    fun guardardatos(){
+        var mensaje = findViewById<EditText>(R.id.txtMensaje).text.toString()
+        var numero = findViewById<EditText>(R.id.txtNumero).text.toString()
+        var preference:SharedPreferences = getSharedPreferences("datos",Context.MODE_PRIVATE)
+        var editor:SharedPreferences.Editor = preference.edit()
+        editor.putString("numero",numero)
+        editor.putString("mensaje",mensaje)
+        editor.commit()
+    }
 
 }
 
